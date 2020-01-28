@@ -1,0 +1,34 @@
+doctype html
+html
+  head
+    title= title
+    link(rel='stylesheet', href='https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css')
+    link(rel='stylesheet', href='/css/style.css')
+    meta(name="viewport" content="width=device-width, initial-scale=1")
+    script(src=process.env.BROWSER_REFRESH_URL) 
+  body
+    block content
+    div(style="margin:100px;")
+     form(method="POST")
+      .form-group
+        label(for="civilite") Civilité
+        select#cicvilite-id.form-control(name="civilite")
+          option(name="civilite")  M
+          option(name="civilite") Mme
+          option(name="civilite") Mlle
+      .form-group
+        label(for="name") Nom
+        input#name-id.form-control(type="text"  name="nom" placeholder="Votre nom")
+      .form-group
+        label(for="prenom") Prénom
+        input#prenom-id.form-control(type="text"  name="prenom" placeholder="Votre prenom")
+      .form-group
+        label(for="email") Email address
+        input#exampleInputEmail1.form-control(type="email"  name="email" aria-describedby="emailHelp" placeholder="Enter email")
+      .form-group
+        label(for="exampleInputPassword1") Password
+        input#exampleInputPassword1.form-control(type="password" name="mdp" placeholder="Password")
+      button.btn.btn-primary(type="submit") Submit
+    script(src='https://code.jquery.com/jquery-3.3.1.slim.min.js')
+    script(src='https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js')
+    script(src='https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js')
