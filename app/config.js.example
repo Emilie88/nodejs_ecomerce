@@ -1,5 +1,4 @@
 module.exports = {
     port : 80,
-    mongodbConnectionString: "mongodb+srv://root:root@cluster0-ptxru.mongodb.net/test?retryWrites=true&w=majority"
-    
+    mongodbConnectionString : ''
 }

@@ -1,15 +1,11 @@
 const mongoose = require('mongoose');
 
-var userSchema = mongoose.Schema({
-    cicvilite: {type: String},
-    nom: {type: String}, 
-    prenom: {type: String},
-    email: {type: String},  
-    password: {type: String}
-}); 
- 
+const UserSchema = mongoose.Schema({
+	firstname: { type: String, match: /^[a-zA-ZàáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšžÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑßÇŒÆČŠŽ∂ð ,.'-]+$/ },
+	lastname: { type: String, match: /^[a-zA-ZàáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšžÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑßÇŒÆČŠŽ∂ð ,.'-]+$/ },
+    email : {  type: String },
+    password : { type: String },
+    date: { type: Date, default: Date.now }
+});
 
-
-module.exports = mongoose.model('User', userSchema); // User devient users à la création de la collection
-
-
+module.exports = mongoose.model('User', UserSchema); // User devient users à la création de la collection

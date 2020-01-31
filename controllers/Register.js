@@ -1,33 +1,41 @@
-const crypto =    require('crypto');
-const UserMongo = require('../models/UserMongoDB.js')
-
 module.exports = class Register {
-    
-    printForm(req, res) {
-        res.render('user_register')
+
+    printForm(request, response) {
+        response.render('user_register', {form : request.body})        
     }
 
-    process(req, res) {
- // Nous utilisons le schéma User
-        var user = new UserMongo();
+    async process(request, response) {
+
+        let UserModel = require('../models/User.js')
+        let User = new UserModel()
+
+        let formError = null
+        // On vérifie la confirmation du mot de passe
+        if(request.body.password != request.body.cpassword) {
+            formError = `La confirmation de votre mot de passe n'est pas correcte !`  
+        }
+
+        let emailExists = await User.emailExists(request.body.email);
+        if(emailExists) {
+            formError = `Cette email est déjà enregistré dans notre base de données !`
+        }
         
-       
-        // Nous récupérons les données reçues pour les ajouter à l'objet User
-        user.civilite =  req.body.civilite;
-        user.nom = req.body.nom;
-        user.prenom =  req.body.prenom;
-        user.mail = req.body.email;
-        user.password = crypto.createHash('sha1')
-        .update( req.body.password)
-        .digest('hex');
-        
-        
-        //Nous stockons l'objet en base
-        user.save(function(err){
-            if(err){
-            res.send(err);
-            }
-            res.send({message : 'Bravo...'});
-        })
+        // Si il y a eut une erreur on stop
+        if(formError !== null) {
+            response.render('user_register', {
+                form : request.body,
+                error : formError
+            })
+            return;
+        }
+
+        User.add(
+            request.body.civility, 
+            request.body.lastname, 
+            request.body.firstname, 
+            request.body.email, 
+            request.body.password
+        )        
+        response.redirect('/')
     }
 }
